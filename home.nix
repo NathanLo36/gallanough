@@ -11,6 +11,8 @@
         rebuild = "sudo nixos-rebuild switch --flake .";
     };
 
+    programs.bash.enable = true;
+
     programs.kitty = {
         enable = true;
         themeFile = "midsummer-night";
