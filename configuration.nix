@@ -116,6 +116,47 @@
   services.syncthing.openDefaultPorts = true;
   services.syncthing.dataDir = "/home/nate";
   programs.git.enable = true;
+  services.zerotierone = {
+    enable = true;
+    joinNetworks = [
+      "9e1948db6386c986"
+    ];
+  };
+  services.samba = {
+    enable = true;
+    securityType = "user";
+    openFirewall = true;
+    settings = {
+      global = {
+        "workgroup" = "WORKGROUP";
+        "server string" = "smbnix";
+        "netbios name" = "smbnix";
+        "security" = "user";
+        #"use sendfile" = "yes";
+        #"max protocol" = "smb2";
+        # note: localhost is the ipv6 localhost ::1
+        "hosts allow" = "192.168.0. 127.0.0.1 localhost 10.147.17.";
+        "hosts deny" = "0.0.0.0/0";
+        "guest account" = "nobody";
+        "map to guest" = "bad user";
+      };
+      "PrivateVol1Share" = {
+        "path" = "/mnt/vol1";
+        "browseable" = "yes";
+        "read only" = "yes";
+        "guest ok" = "no";
+        "valid users" = "nate";
+      };
+    };
+  };
+
+  services.samba-wsdd = {
+    enable = true;
+    openFirewall = true;
+  };
+
+  networking.firewall.enable = true;
+  networking.firewall.allowPing = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
